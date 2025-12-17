@@ -15,25 +15,58 @@ export function BottomNav({ activeTab, onTabChange }: BottomNavProps) {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-bottom z-40">
-      <div className="flex items-center justify-around max-w-md mx-auto">
-        {tabs.map(tab => {
-          const Icon = tab.icon;
-          const isActive = activeTab === tab.id;
+    <div className="fixed bottom-0 left-0 right-0 z-40 pb-safe">
+      <div className="relative mx-auto max-w-md">
+        {/* Glassmorphism background */}
+        <div className="absolute inset-0 bg-white/80 backdrop-blur-xl border-t border-gray-200/50 shadow-[0_-4px_24px_rgba(0,0,0,0.08)]" />
+        
+        {/* Content */}
+        <div className="relative flex items-center justify-around px-2">
+          {tabs.map(tab => {
+            const Icon = tab.icon;
+            const isActive = activeTab === tab.id;
 
-          return (
-            <button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className={`flex-1 flex flex-col items-center gap-1 py-2 transition-colors ${
-                isActive ? 'text-orange-500' : 'text-gray-600 hover:text-gray-800'
-              }`}
-            >
-              <Icon className={`size-5 ${isActive ? 'fill-current' : ''}`} />
-              <span className="text-xs">{tab.label}</span>
-            </button>
-          );
-        })}
+            return (
+              <button
+                key={tab.id}
+                onClick={() => onTabChange(tab.id)}
+                className="relative flex-1 flex flex-col items-center gap-1 py-3 transition-all duration-200 group"
+              >
+                {/* Active indicator */}
+                {isActive && (
+                  <div className="absolute -top-[1px] left-1/2 -translate-x-1/2 w-12 h-1 bg-gradient-to-r from-orange-500 to-pink-500 rounded-full" />
+                )}
+                
+                {/* Icon container */}
+                <div className={`relative transition-all duration-200 ${
+                  isActive ? 'scale-110' : 'scale-100 group-hover:scale-105'
+                }`}>
+                  {/* Background glow for active state */}
+                  {isActive && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-pink-500/20 rounded-full blur-lg" />
+                  )}
+                  
+                  <Icon 
+                    className={`size-6 relative transition-all duration-200 ${
+                      isActive 
+                        ? 'text-orange-500' 
+                        : 'text-gray-600 group-hover:text-gray-800'
+                    } ${isActive ? 'fill-current' : ''}`} 
+                  />
+                </div>
+                
+                {/* Label */}
+                <span className={`text-[10px] transition-all duration-200 ${
+                  isActive 
+                    ? 'text-orange-500' 
+                    : 'text-gray-600 group-hover:text-gray-800'
+                }`}>
+                  {tab.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

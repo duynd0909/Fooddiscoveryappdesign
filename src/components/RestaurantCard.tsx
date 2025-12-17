@@ -103,48 +103,69 @@ export function RestaurantCard({
         </div>
 
         {/* Action buttons - vertical on right side */}
-        <div className="absolute right-4 bottom-24 flex flex-col gap-3">
+        <div className="absolute right-4 bottom-32 flex flex-col gap-6">
           {/* Save button */}
           <button
             onClick={() => onSave(restaurant.id)}
-            className={`p-3 rounded-full shadow-lg transition-colors backdrop-blur-sm ${
-              isSaved ? 'bg-red-500 text-white' : 'bg-white/90 text-gray-800'
-            }`}
+            className="flex flex-col items-center gap-1 transition-transform active:scale-90"
             aria-label={isSaved ? 'Đã lưu' : 'Lưu'}
           >
-            <Heart className={`size-6 ${isSaved ? 'fill-current' : ''}`} />
+            <Heart 
+              className={`size-7 transition-all ${
+                isSaved 
+                  ? 'fill-red-500 text-red-500' 
+                  : 'text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]'
+              }`} 
+              style={{ filter: isSaved ? 'drop-shadow(0 1px 3px rgba(239, 68, 68, 0.5))' : undefined }}
+            />
+            <span className="text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              1.2K
+            </span>
           </button>
 
           {/* Navigate button */}
           <button
             onClick={() => onNavigate(restaurant.id)}
-            className="p-3 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg transition-colors backdrop-blur-sm"
+            className="flex flex-col items-center gap-1 transition-transform active:scale-90"
             aria-label="Chỉ đường"
           >
-            <Navigation className="size-6" />
+            <div className="relative">
+              <Navigation className="size-7 text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]" />
+            </div>
+            <span className="text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              Đường
+            </span>
           </button>
 
           {/* Check-in button */}
           <button
             onClick={() => onCheckIn(restaurant.id)}
-            className="p-3 bg-white hover:bg-gray-100 text-gray-800 rounded-full shadow-lg transition-colors backdrop-blur-sm"
+            className="flex flex-col items-center gap-1 transition-transform active:scale-90"
             aria-label="Check-in"
           >
-            <span className="text-xl">✓</span>
+            <div className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
+              <span className="text-white text-lg leading-none">✓</span>
+            </div>
+            <span className="text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              Check
+            </span>
           </button>
 
           {/* Share button */}
           <button
-            className="p-3 bg-white/90 hover:bg-white text-gray-800 rounded-full shadow-lg transition-colors backdrop-blur-sm"
+            className="flex flex-col items-center gap-1 transition-transform active:scale-90"
             aria-label="Chia sẻ"
           >
-            <Share2 className="size-6" />
+            <Share2 className="size-7 text-white drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]" />
+            <span className="text-white text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              Chia sẻ
+            </span>
           </button>
         </div>
       </div>
 
       {/* Restaurant info */}
-      <div className="absolute bottom-0 left-0 right-20 p-4 text-white">
+      <div className="absolute bottom-0 left-0 right-20 p-4 pb-20 text-white">
         {/* Name and rating */}
         <div className="flex items-start justify-between mb-2">
           <div className="flex-1">
@@ -169,7 +190,7 @@ export function RestaurantCard({
         <p className="text-sm text-white/90 mb-3">{restaurant.tagline}</p>
 
         {/* Tags */}
-        <div className="flex flex-wrap gap-2 mb-3">
+        <div className="flex flex-wrap gap-2">
           {restaurant.bestFor?.map((tag, index) => (
             <span
               key={index}
